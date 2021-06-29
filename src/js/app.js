@@ -1,14 +1,15 @@
-export default function orderByProps(obj, order) {
-  const orderArr = [];
-  const sortedOrderArr = [];
-  for (const key in obj) {
-    if (order.includes(key)) {
-      orderArr.push({ key, value: obj[key] });
-    } else {
-      sortedOrderArr.push({ key, value: obj[key] });
+export default function orderByProps(objectSort, arrSort = []) {
+  let arrAllKey = [];
+  for (const key in objectSort) {
+    if (arrSort.indexOf(key) === -1) {
+      arrAllKey.push(key);
     }
   }
-  orderArr.sort((a, b) => order.indexOf(a.key) - order.indexOf(b.key));
-  sortedOrderArr.sort((a, b) => ((a.key > b.key) ? 1 : -1));
-  return [...orderArr, ...sortedOrderArr];
+  arrAllKey = [...arrSort, ...arrAllKey.sort()];
+
+  const result = [];
+  for (const key of arrAllKey) {
+    result.push({ key, value: objectSort[key] });
+  }
+  return result;
 }
